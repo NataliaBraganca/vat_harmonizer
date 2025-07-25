@@ -1,0 +1,2 @@
+class EuCountry < ApplicationRecord
+end
