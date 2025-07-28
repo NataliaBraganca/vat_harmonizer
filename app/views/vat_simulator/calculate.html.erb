@@ -1,0 +1,11 @@
+<h1>VAT Calculation Result</h1>
+
+<p><strong>From:</strong> <%= @origin_country.name %> (<%= @origin_country.code %>)</p>
+<p><strong>To:</strong> <%= @destination_country.name %> (<%= @destination_country.code %>)</p>
+<p><strong>Category:</strong> <%= @category %></p>
+<p><strong>Sale Value:</strong> €<%= '%.2f' % @sale_value %></p>
+<p><strong>VAT Rate Applied:</strong> <%= @vat_rate %>%</p>
+<p><strong>VAT Amount:</strong> €<%= '%.2f' % @vat_amount %></p>
+
+<%= link_to "← Back to Calculator", vat_simulator_index_path, class: "btn" %>
+
