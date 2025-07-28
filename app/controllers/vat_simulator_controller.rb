@@ -1,7 +1,17 @@
 class VatSimulatorController < ApplicationController
   def index
-    @countries = EuCountry.all.order(:name)
+    # Lista todos os países disponíveis
+    @countries = EuCountry.order(:name)
+
+    raw_categories = @countries.map do |country|
+      rates = country.reduced_vat_rates
+      rates = JSON.parse(rates) if rates.is_a?(String)
+      rates&.keys || []
+    end
+
+    @categories = raw_categories.flatten.uniq.sort
   end
+
 
 
   def calculate
@@ -22,6 +32,8 @@ class VatSimulatorController < ApplicationController
 
     @vat_rate = vat_rate
     @vat_amount = @sale_value * (@vat_rate / 100.0)
+    @total_amount = @sale_value + @vat_amount
+
     render :calculate
   end
 end

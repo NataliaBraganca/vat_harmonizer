@@ -6,6 +6,7 @@
 <p><strong>Sale Value:</strong> €<%= '%.2f' % @sale_value %></p>
 <p><strong>VAT Rate Applied:</strong> <%= @vat_rate %>%</p>
 <p><strong>VAT Amount:</strong> €<%= '%.2f' % @vat_amount %></p>
+<p><strong>Total Amount (Sale + VAT):</strong> €<%= '%.2f' % @total_amount %></p>
+
 
 <%= link_to "← Back to Calculator", vat_simulator_index_path, class: "btn" %>
-
