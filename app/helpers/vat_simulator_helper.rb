@@ -1,0 +1,2 @@
+module VatSimulatorHelper
+end

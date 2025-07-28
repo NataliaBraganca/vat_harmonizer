@@ -1,0 +1,17 @@
+<h1>VAT Simulation Result</h1>
+
+<p><strong>Origin Country:</strong> <%= EuCountry.find_by(code: params[:origin_country])&.name %></p>
+<p><strong>Destination Country:</strong> <%= @destination_country.name %></p>
+<p><strong>Product Category:</strong> <%= params[:product_category].capitalize %></p>
+<p><strong>Sale Value:</strong> € <%= number_with_precision(params[:sale_value].to_f, precision: 2) %></p>
+
+<hr>
+
+<p><strong>Applied VAT Rate:</strong> <%= @vat_rate %> %</p>
+<p><strong>VAT Amount:</strong> € <%= number_with_precision(@vat_amount, precision: 2) %></p>
+<p><strong>Total Price (with VAT):</strong> € <%= number_with_precision(@total_amount, precision: 2) %></p>
+
+<br>
+
+<%= button_to "Back to VAT Calculator", root_path, method: :get, class: "button" %>
+
