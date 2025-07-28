@@ -1,0 +1,7 @@
+name,code,standard_vat_rate,reduced_vat_rates,oss_threshold,reverse_charge_note,requires_vat_registration,vat_authority_url
+Germany,DE,19.0,"{""food"":7.0,""books"":7.0}",10000,"Reverse charge applies for B2B with valid VAT ID",false,https://www.bzst.de
+France,FR,20.0,"{""food"":5.5,""books"":5.5}",10000,"Reverse charge applies for B2B with valid VAT ID",false,https://www.impots.gouv.fr
+Italy,IT,22.0,"{""food"":10.0,""books"":4.0}",10000,"Reverse charge applies for B2B with valid VAT ID",false,https://www.agenziaentrate.gov.it
+Belgium,BE,21.0,"{""food"":6.0,""books"":6.0}",10000,"Reverse charge applies for B2B with valid VAT ID",false,https://financien.belgium.be
+Netherlands,NL,21.0,"{""food"":9.0}",10000,"Reverse charge applies for B2B with valid VAT ID",false,https://www.belastingdienst.nl
+
