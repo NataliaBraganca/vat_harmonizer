@@ -2,29 +2,29 @@
 
 <p>Use this form to simulate VAT for a cross-border sale within the European Union.</p>
 
-<%= form_with url: vat_simulator_calculate_path, method: :post, data: { turbo: false }, local: true do |f| %>
+
+<%= form_with url: vat_simulator_calculate_path, method: :post, data: { turbo: false } do |f| %>
   <div>
-    <%= label_tag :origin_country, "Origin Country" %><br>
-    <%= select_tag :origin_country, options_from_collection_for_select(@countries, :code, :name), prompt: "Select a country" %>
+    <%= label_tag :origin_country, "Origin Country" %>
+    <%= select_tag :origin_country, options_from_collection_for_select(@countries, "code", "name"), prompt: "Select Origin Country" %>
   </div>
 
   <div>
-    <%= label_tag :destination_country, "Destination Country" %><br>
-    <%= select_tag :destination_country, options_from_collection_for_select(@countries, :code, :name), prompt: "Select a country" %>
+    <%= label_tag :destination_country, "Destination Country" %>
+    <%= select_tag :destination_country, options_from_collection_for_select(@countries, "code", "name"), prompt: "Select Destination Country" %>
   </div>
 
   <div>
-    <%= label_tag :product_category, "Product Category" %><br>
-    <%= select_tag :product_category, options_for_select(["books", "food", "other"]), prompt: "Select a category" %>
-    <small>Only “books” and “food” may be eligible for reduced VAT rates.</small>
+    <%= label_tag :product_category, "Product Category" %>
+    <%= select_tag :product_category, options_for_select(["books", "food", "medical", "hotel accommodation", "take away food", "firewood", "other"]), prompt: "Select Product Category" %>
   </div>
 
   <div>
-    <%= label_tag :sale_value, "Sale Value (€)" %><br>
-    <%= number_field_tag :sale_value, nil, step: 0.01, required: true %>
+    <%= label_tag :sale_value, "Sale Value (€)" %>
+    <%= number_field_tag :sale_value, nil, step: 0.01, min: 0 %>
   </div>
 
-  <br>
-
-  <%= submit_tag "Calculate VAT", class: "button" %>
+  <div>
+    <%= submit_tag "Calculate VAT" %>
+  </div>
 <% end %>

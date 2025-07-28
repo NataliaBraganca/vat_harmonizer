@@ -8,23 +8,26 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 #
-require 'csv'
+puts "🌍 Importing EU VAT data using the Vatlayer API..."
 
-csv_path = Rails.root.join('db', 'seeds', 'eu_vat_data.csv')
+eu_countries = ["DE", "FR", "IT", "BE", "NL"] # Germany, France, Italy, Belgium, Netherlands
 
-puts "🌍 Importando dados de países da União Europeia..."
+eu_countries.each do |code|
+  begin
+    rates = VatLayerClient.fetch_rates(code)
 
-CSV.foreach(csv_path, headers: true) do |row|
-  EuCountry.create!(
-    name: row['name'],
-    code: row['code'],
-    standard_vat_rate: row['standard_vat_rate'],
-    reduced_vat_rates: row['reduced_vat_rates'].present? ? JSON.parse(row['reduced_vat_rates']) : {},
-    oss_threshold: row['oss_threshold'],
-    reverse_charge_note: row['reverse_charge_note'],
-    requires_vat_registration: row['requires_vat_registration'] == 'true',
-    vat_authority_url: row['vat_authority_url']
-  )
+    EuCountry.find_or_create_by!(code: code) do |country|
+      country.name = rates[:country_name]
+      country.standard_vat_rate = rates[:standard_rate]
+      country.reduced_vat_rates = rates[:reduced_rates].to_json
+      country.oss_threshold = 10_000
+      country.reverse_charge_note = "Reverse charge applies for B2B transactions with valid VAT ID"
+      country.requires_vat_registration = false
+      country.vat_authority_url = "https://europa.eu/youreurope/business/taxation/vat/index_en.htm"
+    end
+
+    puts "✅ Imported: #{rates[:country_name]} (#{code})"
+  rescue => e
+    puts "⚠️ Error importing #{code}: #{e.message}"
+  end
 end
-
-puts "✅ Dados importados com sucesso!"

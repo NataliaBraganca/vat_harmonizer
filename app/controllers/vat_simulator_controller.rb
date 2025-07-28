@@ -3,28 +3,27 @@ class VatSimulatorController < ApplicationController
     @countries = EuCountry.all.order(:name)
   end
 
+
   def calculate
-    @countries = EuCountry.all.order(:name)
+    @origin_country = EuCountry.find_by(code: params[:origin_country])
+    @destination_country = EuCountry.find_by(code: params[:destination_country])
+    @category = params[:product_category]
+    @sale_value = params[:sale_value].to_f
 
-    origin_code = params[:origin_country]
-    destination_code = params[:destination_country]
-    category = params[:product_category]
-    sale_value = params[:sale_value].to_f
-
-    @destination_country = EuCountry.find_by(code: destination_code)
-
-    if @destination_country.nil?
-      flash[:alert] = "País de destino inválido"
-      return redirect_to root_path
+    if @origin_country.nil? || @destination_country.nil?
+      flash[:alert] = "One or both countries are not available in the database."
+      redirect_to vat_simulator_path and return
     end
 
-    # Lógica para determinar a alíquota
-    reduced_rates = @destination_country.reduced_vat_rates || {}
-    @vat_rate = reduced_rates[category] || @destination_country.standard_vat_rate
+    reduced_rates = JSON.parse(@destination_country.reduced_vat_rates || "{}")
+    matched_key = reduced_rates.keys.find { |key| key.downcase.include?(@category.downcase) }
 
-    @vat_amount = (sale_value * @vat_rate) / 100.0
-    @total_amount = sale_value + @vat_amount
+    vat_rate = matched_key ? reduced_rates[matched_key] : @destination_country.standard_vat_rate
 
+    @vat_rate = vat_rate
+    @vat_amount = @sale_value * (@vat_rate / 100.0)
     render :calculate
   end
+
+
 end
