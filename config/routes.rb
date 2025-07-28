@@ -13,6 +13,6 @@ Rails.application.routes.draw do
 
   root "vat_simulator#index"
   post "vat_simulator/calculate", to: "vat_simulator#calculate"
-# Defines the root path route ("/")
+  # Defines the root path route ("/")
   # root "posts#index"
 end

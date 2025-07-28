@@ -10,7 +10,7 @@
 #
 puts "🌍 Importing EU VAT data using the Vatlayer API..."
 
-eu_countries = ["DE", "FR", "IT", "BE", "NL"] # Germany, France, Italy, Belgium, Netherlands
+eu_countries = [ "DE", "FR", "IT", "BE", "NL" ] # Germany, France, Italy, Belgium, Netherlands
 
 eu_countries.each do |code|
   begin

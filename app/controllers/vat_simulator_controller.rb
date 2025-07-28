@@ -24,6 +24,4 @@ class VatSimulatorController < ApplicationController
     @vat_amount = @sale_value * (@vat_rate / 100.0)
     render :calculate
   end
-
-
 end
