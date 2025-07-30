@@ -8,7 +8,6 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 #
-puts "🌍 Importing EU VAT data using the Vatlayer API..."
 
 puts "🌍 Importing EU VAT data using the Vatlayer API..."
 
@@ -31,4 +30,3 @@ puts "🌍 Importing EU VAT data using the Vatlayer API..."
     puts "⚠️ Error importing #{code}: #{e.message}"
   end
 end
-
